@@ -23,9 +23,6 @@ public class SimpleTeleOp extends CommandOpMode {
                 new Motor(hardwareMap, "right_drive_motor"),
                 gamepad
         );
-        // sets the default command to the drive command so that it is always looking
-        // at the value on the joysticks
-        driveSystem.setDefaultCommand(new DriveCommand(driveSystem));
 
         Intake intake = new Intake(
                 new Motor(hardwareMap, "left_intake_motor"),
@@ -39,6 +36,10 @@ public class SimpleTeleOp extends CommandOpMode {
         gamepad.getGamepadButton(GamepadKeys.Button.B)
                 .whenHeld(new InstantCommand(intake::reverse, intake))
                 .whenReleased(new InstantCommand(intake::stop, intake));
+
+        // sets the default command to the drive command so that it is always looking
+        // at the value on the joysticks
+        driveSystem.setDefaultCommand(new DriveCommand(driveSystem));
 
         // update telemetry every loop
         schedule(new RunCommand(telemetry::update));
